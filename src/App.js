@@ -8,19 +8,50 @@ import step3 from "./components/images/3.jpg";
 import step4 from "./components/images/4.jpg";
 import step5 from "./components/images/5.jpg";
 import step6 from "./components/images/6.jpg";
+let random="";
+var checkVal=[];
 function App() {
   const [randomValue,setRandomValue]=useState('0');
-  const [space,setSpace]=useState('_');
-  const [guessWord,setguessWord]=useState("true");
+  const [space,setSpace]=useState('');
+  var [guessWord,setguessWord]=useState("true");
   const [wrong,setWrong]=useState(0);
   const [images,setImages]=useState([step0,step1,step2,step3,step4,step5,step6]);
   useEffect(async() => {
-await  setRandomValue(randomLanguage());
-  }, [])
-  const setWord=()=>{
+
+// if(randomValue!="0")
+await  setRandomValue(await randomLanguage());
+if(randomValue)
+await setWord(0);
+  }, [randomValue])
+
+
+  const checkValue=(e)=>{
+    random=e.target.innerHTML;
+   setWord(1);
+  }
+  const setWord=async(checkme)=>{
     // alert(randomValue)
-return randomValue.split('').map((a)=>"_");
-//  setguessWord(false);
+    if(checkme===0)
+    {
+      checkVal="";
+     await randomValue.split('').map((a)=>checkVal+="_")
+    //  alert(randomValue)
+      setSpace(checkVal);
+    }
+    else
+    {
+      randomValue.split('').map((a,index)=>{
+        // alert(random)
+          if(a===random)
+          {
+            var ind=checkVal.split('')
+            ind[index]=a;
+           checkVal=ind.join('');
+          
+          }
+      })
+      setSpace(checkVal)
+    }
   }
   return (
     <div  className="text-center">
@@ -37,13 +68,11 @@ return randomValue.split('').map((a)=>"_");
         <img src={images[0]} alt=""/>
       </div>
       <div>
-        {
-(guessWord)?setWord():"_"
-}
+{space}
       </div>
       <div>
        { "abcdefghijklmnopqrstuvwxyz".split("").map((value)=>(
-          <button className="btn btn-large btn-primary m-3" name={value}>{value}</button>
+          <button onClick={checkValue} className="btn btn-large btn-primary m-3" name={value}>{value}</button>
         ))}
 
       </div>
