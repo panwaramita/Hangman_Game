@@ -14,7 +14,7 @@ function App() {
   const [randomValue,setRandomValue]=useState('0');
   const [space,setSpace]=useState('');
   var [guessWord,setguessWord]=useState("true");
-  const [wrong,setWrong]=useState(0);
+  let [wrong,setWrong]=useState(0);
   const [images,setImages]=useState([step0,step1,step2,step3,step4,step5,step6]);
   useEffect(async() => {
 
@@ -27,6 +27,7 @@ await setWord(0);
 
   const checkValue=(e)=>{
     random=e.target.innerHTML;
+    setWrong(0);
    setWord(1);
   }
   const setWord=async(checkme)=>{
@@ -40,6 +41,7 @@ await setWord(0);
     }
     else
     {
+      let checkBreak=false;
       randomValue.split('').map((a,index)=>{
         // alert(random)
           if(a===random)
@@ -48,6 +50,15 @@ await setWord(0);
             ind[index]=a;
            checkVal=ind.join('');
           
+          }
+          else
+          {
+            // alert(wrong);
+            if(checkBreak===false)
+            {
+            setWrong(wrong+=1);          
+            checkBreak=true
+            }
           }
       })
       setSpace(checkVal)
@@ -65,7 +76,7 @@ await setWord(0);
         <p>Wrong Gusses: {wrong} of 6</p>
       </div>
       <div>
-        <img src={images[0]} alt=""/>
+        <img src={images[wrong]} alt=""/>
       </div>
       <div>
 {space}
