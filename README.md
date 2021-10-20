@@ -38,4 +38,4 @@ Project is created with:
 
 ## Link
 
-[Calculator](https://panwaramita.github.io/calculator/)
+[Hangman Game](https://panwaramita.github.io/Hangman_Game/)
